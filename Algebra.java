@@ -10,7 +10,7 @@ public class Algebra
 	    System.out.println(plus(2,3));   // 2 + 3
 	    System.out.println(minus(7,2));  // 7 - 2
    		System.out.println(minus(2,7));  // 2 - 7
- 		System.out.println(times(3,4));  // 3 * 4
+ 		System.out.println(times(3, 4));  // 3 * 4
    		System.out.println(plus(2,times(4,2)));  // 2 + 4 * 2
    		System.out.println(pow(5,3));      // 5^3
    		System.out.println(pow(3,5));      // 3^5
@@ -27,9 +27,19 @@ public class Algebra
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) 
 	{
-		for (int i = 0; i < x2; i++) // loop that will run the same amount as the value of x2 and add 1 each time
+		if (x2 >= 0)
 		{
-			x1++;
+			for (int i = 0; i < x2; i++) // loop that will run the same amount as the value of x2 and add 1 each time
+			{
+				x1++;
+			}
+		}
+		else
+		{
+			for (int i = x2; i < 0; i++) // loop that will run the same amount as the value of x2 and minus 1 each time (because x2<0)
+			{
+				x1--;
+			}
 		}
 		return x1;
 	}
@@ -37,20 +47,41 @@ public class Algebra
 	// Returns x1 - x2
 	public static int minus(int x1, int x2) 
 	{
-		for (int i = 0; i < x2; i++) // loop that will run the same amount as the value of x2 and minus 1 each time
+		if (x2 >= 0)
 		{
-			x1--;
-		}		
-		return x1;
+			for (int i = 0; i < x2; i++) // loop that will run the same amount as the value of x2 and minus 1 each time
+			{
+				x1--;
+			}		
+		}
+		else
+		{
+			for (int i = x2; i < 0; i++) // loop that will run the same amount as the value of x2 and add 1 each time (x2<0)
+			{
+				x1++;
+			}
+		}
+		return x1;	
 	}
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) 
-	{
+	{			
 		int multi = 0;
-		for (int i = 0; i < x2; i++)
+		if (x2 > 0)
 		{
-			multi = plus(multi, x1);
+			for (int i = 0; i < x2; i++)
+			{
+				multi = plus(multi, x1);
+			}
+		}
+		else
+		{
+			for (int i = x2; i < 0; i++)
+			{
+				multi = plus(multi, x1);
+			}
+			multi = minus(0, multi); // correcting the minus before the answer
 		}
 		return multi;
 	}
