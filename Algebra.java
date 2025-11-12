@@ -93,7 +93,7 @@ public class Algebra
 	public static int sqrt(int x) 
 	{
 		int i = 0;
-		while (pow(i + 1, 2) < x)
+		while (pow(i + 1, 2) <= x)
 		{
 			i++;
 		}
