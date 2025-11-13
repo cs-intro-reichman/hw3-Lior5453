@@ -103,14 +103,40 @@ public class Algebra
 	// Returns the integer part of x1 / x2 
 	public static int div(int x1, int x2) 
 	{
-		int currentValue = x1;
+		if (x2 == 0 || x1 == 0)
+			return 0;
+
 		int count = 0;
-		while (currentValue >= x2)
+		if (x1 >= 0 && x2 > 0) 
 		{
-			currentValue = minus(currentValue, x2);
+			while (x1 >= x2) 
+			{
+				x1 = minus(x1, x2);
+				count++;
+			}
+        	return count;
+    	}
+		if (x1 < 0 && x2 < 0) // no need for else ifs cause if joins to if returns and leaves function
+		{
+        	while (x1 <= x2) 
+			{          
+            	x1 = minus(x1, x2);
+            	count++;
+        	}
+        	return count;
+    	}
+		//if only 1 of x1/x2 is negative - change the number for positive for the calculation
+		if (x1 < 0)
+			x1 = minus(0, x1);
+		else 
+			x2 = minus(0, x2);
+
+		while (x1 >= x2) 
+		{
+			x1 = minus(x1, x2);
 			count++;
 		}
-		return count;
+		return minus(0, count); // returning minus because only one of the dividers is negative
 	}
 
 	// Returns x1 % x2
