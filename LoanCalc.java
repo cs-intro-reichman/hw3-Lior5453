@@ -65,48 +65,32 @@ public class LoanCalc
     public static double bisectionSolver(double loan, double rate, int n, double epsilon) 
 	{  
 		iterationCounter = 0;
-		double low = loan / n;
-		double high = loan;
-		double middle = (high + low) / 2;
+		double low  = loan / n; // minimal value of payment
+		double high = loan; // max value of payment
+		double mid  = 0;
 
-		double paymentLow = endBalance(loan, rate, n, low);
-		double paymentHigh = endBalance(loan, rate, n, high);
+		// initializing the value of both of the corners - whats missing from the loan
+	    double endLow  = endBalance(loan, rate, n, low) - loan;
+    	double endHigh = endBalance(loan, rate, n, high) - loan;
 
 		while ((high - low) > epsilon)
 		{
-			middle = (high + low) / 2;
-			double paymentMiddle = endBalance(loan, rate, n, middle);
-			if ((paymentMiddle * paymentLow) > 0)
-			{
-				low = middle;
-				paymentLow = paymentMiddle;
-			}
-			else
-			{
-				high = middle;
-				paymentHigh = paymentMiddle;
-			}
+			mid = (low + high) / 2.0;
+			double endMiddle = endBalance(loan, rate, n, mid) - loan;
 
-			
+			if (endMiddle * endLow > 0) // if still low change low values
+			{
+				low  = mid;
+				endLow = endMiddle;
+			} 
+			else // change high values
+			{
+				high  = mid;
+				endHigh = endMiddle;
+			}
 			iterationCounter++;
-			System.out.print(middle + ", ");
 		}
 
-		return ((low + high) / 2);
+    	return (low + high) / 2.0;
     }
 }
-		// // Sets L and H to initial values such that 𝑓(𝐿) > 0, 𝑓(𝐻) < 0, 
-		// // implying that the function evaluates to zero somewhere between L and H. 
-		// // So, let’s assume that L and H were set to such initial values. 
-		// // Set g to (𝐿 + 𝐻)/2 
-		// while (𝐻 −𝐿) > 𝜖  {  
-		// // Sets L and H for the next iteration 
-		// if  𝑓(𝑔)∙𝑓(𝐿) > 0	  
-		// // the solution must be between g and H 
-		// // so set L or H accordingly 
-		// else  
-		// // the solution must be between L and g 
-		// // so set L or H accordingly 
-		// // Computes the mid-value (𝑔) for the next iteration  
-		// } 
-		// return g  
