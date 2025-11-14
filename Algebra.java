@@ -3,13 +3,14 @@
 // Math.sqrt. All the functions in this class operate on int values and
 // return int values.
 
-public class Algebra {
-	public static void main(String args[]) {
-	    // Tests some of the operations
+public class Algebra 
+{
+	public static void main(String args[]) 
+	{
 	    System.out.println(plus(2,3));   // 2 + 3
 	    System.out.println(minus(7,2));  // 7 - 2
    		System.out.println(minus(2,7));  // 2 - 7
- 		System.out.println(times(3,4));  // 3 * 4
+ 		System.out.println(times(3, 4));  // 3 * 4
    		System.out.println(plus(2,times(4,2)));  // 2 + 4 * 2
    		System.out.println(pow(5,3));      // 5^3
    		System.out.println(pow(3,5));      // 3^5
@@ -24,44 +25,135 @@ public class Algebra {
 	}  
 
 	// Returns x1 + x2
-	public static int plus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+	public static int plus(int x1, int x2) 
+	{
+		if (x2 >= 0)
+		{
+			for (int i = 0; i < x2; i++) // loop that will run the same amount as the value of x2 and add 1 each time
+			{
+				x1++;
+			}
+		}
+		else
+		{
+			for (int i = x2; i < 0; i++) // loop that will run the same amount as the value of x2 and minus 1 each time (because x2<0)
+			{
+				x1--;
+			}
+		}
+		return x1;
 	}
 
 	// Returns x1 - x2
-	public static int minus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+	public static int minus(int x1, int x2) 
+	{
+		if (x2 >= 0)
+		{
+			for (int i = 0; i < x2; i++) // loop that will run the same amount as the value of x2 and minus 1 each time
+			{
+				x1--;
+			}		
+		}
+		else
+		{
+			for (int i = x2; i < 0; i++) // loop that will run the same amount as the value of x2 and add 1 each time (x2<0)
+			{
+				x1++;
+			}
+		}
+		return x1;	
 	}
 
 	// Returns x1 * x2
-	public static int times(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+	public static int times(int x1, int x2) 
+	{			
+		int multi = 0;
+		if (x2 > 0)
+		{
+			for (int i = 0; i < x2; i++)
+			{
+				multi = plus(multi, x1);
+			}
+		}
+		else
+		{
+			for (int i = x2; i < 0; i++)
+			{
+				multi = plus(multi, x1);
+			}
+			multi = minus(0, multi); // correcting the minus before the answer
+		}
+		return multi;
 	}
 
 	// Returns x^n (for n >= 0)
-	public static int pow(int x, int n) {
-		// Replace the following statement with your code
-		return 0;
+	public static int pow(int x, int n) 
+	{
+		if (n == 0) // if n=0 returrning 1, else checking pow
+			return 1;
+
+		int thePow = x;
+		for (int i = 1; i < n; i++) // loop goes for n-1 times because first time is me setting it to x
+		{
+			thePow = times(thePow, x);
+		}
+		return thePow;
 	}
 
 	// Returns the integer part of x1 / x2 
-	public static int div(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+	public static int div(int x1, int x2) 
+	{
+		if (x2 == 0 || x1 == 0)
+			return 0;
+
+		int count = 0;
+		if (x1 >= 0 && x2 > 0) 
+		{
+			while (x1 >= x2) 
+			{
+				x1 = minus(x1, x2);
+				count++;
+			}
+        	return count;
+    	}
+		if (x1 < 0 && x2 < 0) // no need for else ifs cause if joins to if returns and leaves function
+		{
+        	while (x1 <= x2) 
+			{          
+            	x1 = minus(x1, x2);
+            	count++;
+        	}
+        	return count;
+    	}
+		//if only 1 of x1/x2 is negative - change the number for positive for the calculation
+		if (x1 < 0)
+			x1 = minus(0, x1);
+		else 
+			x2 = minus(0, x2);
+
+		while (x1 >= x2) 
+		{
+			x1 = minus(x1, x2);
+			count++;
+		}
+		return minus(0, count); // returning minus because only one of the dividers is negative
 	}
 
 	// Returns x1 % x2
-	public static int mod(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+	public static int mod(int x1, int x2) 
+	{
+		int division = div(x1, x2);
+		return x1 - (x2 * division);
 	}	
 
 	// Returns the integer part of sqrt(x) 
-	public static int sqrt(int x) {
-		// Replace the following statement with your code
-		return 0;
+	public static int sqrt(int x) 
+	{
+		int i = 0;
+		while (pow(i + 1, 2) <= x)
+		{
+			i++;
+		}
+		return i;
 	}	  	  
 }
