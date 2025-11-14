@@ -65,28 +65,27 @@ public class LoanCalc
     public static double bisectionSolver(double loan, double rate, int n, double epsilon) 
 	{  
 		iterationCounter = 0;
-		double low  = loan / n; // minimal value of payment
-		double high = loan; // max value of payment
-		double mid  = 0;
+		
+		// initializing the low,high values with the max loan and the low without the intrest rate
+		double low  = loan / n; 
+		double high = loan;
 
-		// initializing the value of both of the corners - whats missing from the loan
-	    double endLow  = endBalance(loan, rate, n, low) - loan;
-    	double endHigh = endBalance(loan, rate, n, high) - loan;
+		// initializing the value of loan low (whats missing from the loan) to use in the if
+	    double loanLow  = endBalance(loan, rate, n, low) - loan;
 
 		while ((high - low) > epsilon)
 		{
-			mid = (low + high) / 2.0;
-			double endMiddle = endBalance(loan, rate, n, mid) - loan;
+			double mid = (low + high) / 2.0;
+			double loanMiddle = endBalance(loan, rate, n, mid) - loan;
 
-			if (endMiddle * endLow > 0) // if still low change low values
+			if (loanMiddle * loanLow > 0) // if still low change low values - if not change high value
 			{
 				low  = mid;
-				endLow = endMiddle;
+				loanLow = loanMiddle;
 			} 
-			else // change high values
+			else 
 			{
 				high  = mid;
-				endHigh = endMiddle;
 			}
 			iterationCounter++;
 		}
